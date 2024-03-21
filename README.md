@@ -1,3 +1,7 @@
+# What is this?
+A web crawler that scrapes information about homes for sale from zillow.com.
+
+
 # How to use?
 
 ~~~
