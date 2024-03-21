@@ -1,20 +1,24 @@
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import express from 'express';
 import { Crawler } from './crawler';
 
 const app = express();
 const port = 20001;
 
-app.use(bodyParser.json());
 
-app.post('/crawl', async (req: Request, res: Response) => {
-    const { city, pageNumber = '1', size = '5' } = req.body;
-    if (!city) {
-        return res.status(400).send({ error: 'city is required' });
-    }
+app.get('/crawl', async (req, res) => {
+    const { city, pageNumber = '1', size = '5' } = req.query;
 
     const crawler = new Crawler();
     try {
+        if (typeof city !== 'string') {
+            return res.status(400).send({ error: 'city is required' });
+        }
+        if (typeof pageNumber !== 'string') {
+            return res.status(400).send({ error: 'city is required' });
+        }
+        if (typeof size !== 'string') {
+            return res.status(400).send({ error: 'city is required' });
+        }
         const listings = await crawler.crawlListings(city, pageNumber, size);
         res.send({ listings });
     } catch (error) {
